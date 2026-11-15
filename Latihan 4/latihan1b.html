@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Latihan 1b - Logo UNS Responsive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Secara default / layar <= 1024px logo tersembunyi */
+        .logo-uns {
+            display: none;
+            width: 150px;
+            margin-top: 20px;
+        }
+
+        /* Hanya tampil jika ukuran layar lebih dari 1024px */
+        @media only screen and (min-width: 1025px) {
+            .logo-uns {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h3>Latihan 1b - Media Query Logo UNS</h3>
+    <p>Logo UNS di bawah ini hanya akan muncul jika lebar layar lebih dari 1024px (Layar Komputer/Desktop Large).</p>
+    
+    <!-- Pastikan file gambar logo UNS ada dalam folder yang sama -->
+    <img src="c:\Users\asus\Documents\DESWEB\logo-uns-1.webp" alt="Logo UNS" class="logo-uns">
+</body>
+</html>

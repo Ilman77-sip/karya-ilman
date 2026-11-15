@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web Storage - Modifikasi</title>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #3b82f6;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --text: #0f172a;
+            --border: rgba(255, 255, 255, 0.6);
+            --shadow: rgba(148, 163, 184, 0.15);
+        }
+
+        body.dark-mode {
+            --bg: #090d16;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --text: #f8fafc;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background-color 0.5s ease, color 0.5s ease;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.25;
+            border-radius: 50%;
+            z-index: 0;
+            transition: all 0.5s ease;
+        }
+
+        .tulisan {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            border: 1px solid var(--border);
+            width: 50%;
+            max-width: 550px;
+            padding: 45px 35px;
+            border-radius: 24px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 25px 50px -12px var(--shadow);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease, background-color 0.5s ease, border-color 0.5s ease;
+        }
+
+        .greeting {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        h1 { margin: 0 0 8px 0; font-size: 1.8rem; font-weight: 800; }
+        h2 { font-weight: 400; font-size: 1.05rem; opacity: 0.75; margin: 0 0 25px 0; }
+
+        .stats-badge {
+            display: inline-flex;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+
+        body.dark-mode .stats-badge { background: rgba(255, 255, 255, 0.05); }
+
+        .label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 68px;
+            height: 38px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 38px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "☀️";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            height: 30px;
+            width: 30px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before {
+            content: "🌙";
+            transform: translateX(30px);
+            background-color: #0f172a;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .color-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .color-btn:hover { transform: scale(1.25); }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <div class="tulisan" id="cardContainer">
+        <div class="greeting" id="greetingText">Selamat Datang</div>
+        <h1>Universitas Sebelas Maret</h1>
+        <h2>Pendidikan Teknik Informatika dan Komputer</h2>
+
+        <div class="stats-badge">
+            <span>Kunjungan: <b id="visitCount">0</b>x</span>
+            <span>•</span>
+            <span>Status: <b>Active</b></span>
+        </div>
+        
+        <div class="label">
+            <label class="switch">
+                <input type="checkbox" id="themeToggle" onchange="ubahTema(event)">
+                <span class="slider"></span>
+            </label>
+
+            <small style="opacity: 0.7; margin-top: 10px;">Warna Aksen Storage:</small>
+            <div class="color-picker">
+                <div class="color-btn" style="background: #3b82f6;" onclick="setAccentColor('#3b82f6')"></div>
+                <div class="color-btn" style="background: #10b981;" onclick="setAccentColor('#10b981')"></div>
+                <div class="color-btn" style="background: #8b5cf6;" onclick="setAccentColor('#8b5cf6')"></div>
+                <div class="color-btn" style="background: #f59e0b;" onclick="setAccentColor('#f59e0b')"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const toggleInput = document.getElementById('themeToggle');
+        const greetingText = document.getElementById('greetingText');
+        const visitCountEl = document.getElementById('visitCount');
+        const card = document.getElementById('cardContainer');
+
+        function initApp() {
+            // Load Tema Tersimpan
+            const tema = localStorage.getItem('theme');
+            if (tema === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleInput.checked = true;
+            }
+
+            // Load Warna Aksen Tersimpan
+            const aksen = localStorage.getItem('accentColor') || '#3b82f6';
+            document.documentElement.style.setProperty('--primary', aksen);
+
+            const namaTersimpan = localStorage.getItem('nama');
+            const jam = new Date().getHours();
+            let waktu = jam < 12 ? "Selamat Pagi" : jam < 18 ? "Selamat Siang" : "Selamat Malam";
+            greetingText.innerText = namaTersimpan ? `${waktu}, ${namaTersimpan}!` : `${waktu}, Member!`;
+
+            let visits = parseInt(localStorage.getItem('pageVisits') || '0') + 1;
+            localStorage.setItem('pageVisits', visits);
+            visitCountEl.innerText = visits;
+        }
+
+        initApp();
+
+        function ubahTema(event) {
+            if (event.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+
+        function setAccentColor(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            localStorage.setItem('accentColor', color);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+    </script>
+</body>
+</html>

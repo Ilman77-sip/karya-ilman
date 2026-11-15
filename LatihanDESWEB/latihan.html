@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Modul 8 - Bootstrap Grid</title>
+    <!-- CDN Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style_latihan.css">
+</head>
+<body>
+
+    <div class="container my-4 outline-box">
+        <!-- Header Topbar (Nama & NIM) -->
+        <div class="header-box d-flex justify-content-between align-items-center mb-3">
+            <span class="fw-bold fs-5">AGHNI ILMAN KARISMART</span>
+            <span class="fw-bold fs-5">K3525080</span>
+        </div>
+
+        <!-- Content Area (Grid 2 Kolom Utama) -->
+        <div class="row g-3">
+            <!-- Kolom Kiri: Testimoni -->
+            <div class="col-md-6">
+                <div class="card h-100 content-box">
+                    <div class="card-header bg-white fw-bold">TESTIMONI</div>
+                    <div class="card-body">
+                        <p>Mata kuliah Desain Web sangat bermanfaat dalam memberikan pemahaman mendalam mengenai pengembangan tampilan antarmuka web modern. Penggunaan framework Bootstrap mempermudah proses pembuatan layout yang responsif dan rapi tanpa harus menulis kode CSS dari nol.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Kritik dan Saran -->
+            <div class="col-md-6 d-flex flex-column gap-3">
+                <!-- Section Kritik -->
+                <div class="card content-box flex-fill">
+                    <div class="card-header bg-white fw-bold">KRITIK</div>
+                    <div class="card-body">
+                        <p>Alokasi waktu praktikum terkadang terasa cukup singkat untuk mempelajari materi yang kompleks, sehingga membutuhkan eksplorasi mandiri di luar jam kuliah.</p>
+                    </div>
+                </div>
+
+                <!-- Section Saran -->
+                <div class="card content-box flex-fill">
+                    <div class="card-header bg-white fw-bold">SARAN</div>
+                    <div class="card-body">
+                        <p>Diharapkan materi praktikum ke depan disajikan dengan lebih banyak studi kasus dunia nyata agar mahasiswa semakin mahir mengombinasikan komponen-komponen Bootstrap.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-box text-center mt-3 fw-bold">
+            FOOTER
+        </div>
+    </div>
+
+    <!-- CDN Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

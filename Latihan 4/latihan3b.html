@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Latihan 3b - Animasi Transisi & Baling-Baling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        .box {
+            width: 150px;
+            height: 100px;
+            background: orange;
+            border: 2px solid #212121;
+            margin: 20px auto;
+            
+            transition: all 1s ease-in-out;
+        }
+
+        /* Keyframes Animasi Putar 360 Derajat */
+        @keyframes putarBaling {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Saat Orientasi Landscape */
+        @media (orientation: landscape) {
+            .box {
+                background: blue;
+                border-radius: 50%;
+                
+                animation: putarBaling 2s linear infinite;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h3 style="text-align: center;">Transisi & Animasi CSS3</h3>
+    <div class="box"></div>
+    <p style="text-align: center;">
+        Ubah orientasi ke landscape/portrait untuk melihat efek perubahan warna, bentuk oval, serta animasi berputar.
+    </p>
+</body>
+</html>
